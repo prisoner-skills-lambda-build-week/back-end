@@ -4,6 +4,7 @@ module.exports = {
 	add,
 	get,
 	getAll,
+	findBy,
 	update,
 	remove
 }
@@ -22,9 +23,14 @@ function getAll() {
 	return db(prisoners)
 }
 
+function findBy(filter) {
+	return db(prisoners).where(filter);
+}
+
 function update(id, update) {
 	return db(prisoners).where({id}).update(update)
 }
+
 
 function remove(id) {
 	return db(prisoners).where({id}).del();

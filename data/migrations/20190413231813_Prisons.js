@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
         col.string('username').notNullable().unique();
         col.string('address').notNullable();
         col.string('name').notNullable();
+        col.string('password').notNullable();
     })
     .createTable('prisoners', col => {
         col.increments();
