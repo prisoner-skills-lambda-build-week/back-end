@@ -47,6 +47,8 @@ router.post('/login', async (req, res) => {
 			if(prison && bcrypt.compareSync(password, prison.password)){
 				const token = generateToken(prison);
 				const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
+
+				prisonersInPrison.forEach(prisoner => delete prisoner.prison_id);
 				
 				res.status(200).json({
 					prison: {
