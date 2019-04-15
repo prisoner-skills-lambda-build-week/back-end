@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const prisoners = require('../../data/prisonersModel/prisonersModel');
 const skills = require('../../data/skillsModel/skillsModel');
 const prisonersSkills = require('../../data/prisonersSkillsModel/prisonersSkillsModel');
 
@@ -27,6 +28,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', isAuthed, async (req, res) => {
 	const {name, prisoner_id: prisoners_id} = req.body;
 	try {
+		const existingPrisoner = await prisoners.get(prisoners_id);
+		if(!existingPrisoner){
+			res.status(404).json('prisoner not found');
+			return;
+		}
+		//TODO should error when prisoners_id does not exists
 		const existingSkill = await skills.findBy({name});
 		let skills_id;
 		if(!existingSkill){
