@@ -72,6 +72,7 @@ router.delete('/:id', isAuthed, async (req, res) => {
 		if(!prisonerExists){
 			res.status(404).json('prisoner not found');
 		}else{
+			const ids = await prisoners.remove(id);
 			res.status(200).json('successfully deleted');
 		}
 	} catch (error) {
