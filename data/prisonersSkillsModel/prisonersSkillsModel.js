@@ -4,6 +4,7 @@ module.exports = {
 	add,
 	get,
 	getAll,
+	findBy,
 	update,
 	remove,
 }
@@ -20,6 +21,10 @@ function get(id) {
 
 function getAll() {
 	return db(prisoners_skills);
+}
+
+function findBy(filter) {
+	return db(prisoners_skills).where(filter);
 }
 
 function update(id, update) {

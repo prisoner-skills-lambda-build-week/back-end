@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const prisoners = require('../../data/prisonersModel/prisonersModel');
+const prisonersSkills = require('../../data/prisonersSkillsModel/prisonersSkillsModel');
 
 const {isAuthed} = require('../helpers');
 
@@ -14,13 +15,14 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-	const {id} = req.params;
+	const {id: prisoners_id} = req.params;
 	try {
-		const prisoner = await prisoners.get(id);
+		const prisoner = await prisoners.get(prisoners_id);
 		if(!prisoner){
 			res.status(404).json('prisoner not found');
 		}else{
-			res.status(200).json(prisoner);
+			const skills = await prisonersSkills.findBy({prisoners_id});
+			res.status(200).json({...prisoner, skills});
 		}
 	} catch (error) {
 		res.status(500).json('server error');
