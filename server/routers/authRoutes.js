@@ -32,6 +32,7 @@ router.post('/register', async (req, res) => {
 				});
 			}
 		} catch (error) {
+			console.log(error)
 			res.status(500).json('server error')
 		}
 	}
@@ -63,6 +64,7 @@ router.post('/login', async (req, res) => {
 				res.status(401).json('invalid credentials')
 			}
 		} catch (error) {
+			console.log(error)
 			res.status(500).json('server error')
 		}
 	}

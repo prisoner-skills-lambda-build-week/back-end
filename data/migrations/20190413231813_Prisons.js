@@ -44,8 +44,8 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
     return knex.schema
-        .dropTableIfExists('prisons')
-        .dropTableIfExists('prisoners')
-        .dropTableIfExists('skills')
         .dropTableIfExists('prisoners_skills')
+        .dropTableIfExists('skills')
+        .dropTableIfExists('prisoners')
+        .dropTableIfExists('prisons')
 };
