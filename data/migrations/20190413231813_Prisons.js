@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('Prisons')
+            .inTable('prisons')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
         col.boolean('canHaveWorkLeave').defaultTo(false);
