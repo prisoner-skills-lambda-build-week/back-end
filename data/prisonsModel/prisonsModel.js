@@ -6,7 +6,8 @@ module.exports = {
 	get,
 	getAll,
 	findBy,
-	update
+	update,
+	remove
 }
 
 const prisons = 'prisons';
@@ -29,5 +30,12 @@ function findBy(filter) {
 }
 
 function update(id, update) {
+	if(update.password){
+		update.password = bcrypt.hashSync(update.password, 4);
+	}
 	return db(prisons).where({id}).update(update);
+}
+
+function remove(id) {
+	return db(prisons).where({id}).del();
 }

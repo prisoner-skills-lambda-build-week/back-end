@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const prisons = require('../../data/prisonsModel/prisonsModel');
 const prisoners = require('../../data/prisonersModel/prisonersModel');
 
-const secret = process.env.JWT_SECRET || 'some string';
+const {generateToken} = require('../helpers');
 
 router.post('/register', async (req, res) => {
 	const {username, address, name, password} = req.body;
@@ -19,9 +19,15 @@ router.post('/register', async (req, res) => {
 			} else{
 				const [id] = await prisons.add({username, address, name, password});
 				const prison = await prisons.get(id);
+				const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
 				const token = generateToken(prison);
 				res.status(201).json({
-					id,
+					prison: {
+						id: prison.id,
+						name: prison.name,
+						address: prison.address,
+						prisoners: prisonersInPrison
+					},
 					token
 				});
 			}
@@ -43,13 +49,13 @@ router.post('/login', async (req, res) => {
 				const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
 				
 				res.status(200).json({
-					token,
 					prison: {
 						id: prison.id,
 						name: prison.name,
 						address: prison.address,
 						prisoners: prisonersInPrison
-					}
+					},
+					token
 				})
 			} else{
 				res.status(401).json('invalid credentials')
@@ -59,18 +65,5 @@ router.post('/login', async (req, res) => {
 		}
 	}
 })
-
-const generateToken = prison => {
-	const payload = {
-		subject: prison.id,
-		name: prison.name
-	}
-
-	const options = {
-		expiresIn: '1d'
-	}
-
-	return jwt.sign(payload, secret, options);
-}
 
 module.exports = router;
