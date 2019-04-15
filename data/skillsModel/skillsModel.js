@@ -16,7 +16,7 @@ function add(skill) {
 }
 
 function get(id) {
-	return db(skills).where({id});
+	return db(skills).where({id}).first();
 }
 
 function getAll() {

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const prisoners = require('../../data/prisonersModel/prisonersModel');
+const skills = require('../../data/skillsModel/skillsModel');
 const prisonersSkills = require('../../data/prisonersSkillsModel/prisonersSkillsModel');
 
 const {isAuthed} = require('../helpers');
@@ -21,8 +22,13 @@ router.get('/:id', async (req, res) => {
 		if(!prisoner){
 			res.status(404).json('prisoner not found');
 		}else{
-			const skills = await prisonersSkills.findBy({prisoners_id});
-			res.status(200).json({...prisoner, skills});
+			const p_skillsPair = await prisonersSkills.findBy({prisoners_id});
+			const skillsPromises = p_skillsPair.map(async pair => {
+				const skill = await skills.get(pair.skills_id);
+				return skill;
+			})  
+			const p_skills = await Promise.all(skillsPromises);
+			res.status(200).json({...prisoner, p_skills});
 		}
 	} catch (error) {
 		res.status(500).json('server error');
