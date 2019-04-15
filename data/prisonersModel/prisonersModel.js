@@ -28,7 +28,7 @@ function findBy(filter) {
 }
 
 function update(id, update) {
-	return db(prisoners).where({id}).update(update)
+	return db(prisoners).where({id}).update(update);
 }
 
 
