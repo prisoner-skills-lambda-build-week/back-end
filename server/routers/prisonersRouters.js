@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const prisons = require('../../data/prisonsModel/prisonsModel');
 const prisoners = require('../../data/prisonersModel/prisonersModel');
 const skills = require('../../data/skillsModel/skillsModel');
 const prisonersSkills = require('../../data/prisonersSkillsModel/prisonersSkillsModel');
@@ -42,8 +43,14 @@ router.post('/', isAuthed, async (req, res) => {
 		res.status(400).json('incomplete data')
 	} else{
 		try {
-			const [id] = await prisoners.add({name, prison_id});
-			res.status(201).json(id);
+			const prisonExists = await prisons.get(prison_id);
+			if(!prisonExists){
+				res.status(404).json('prison not found');
+			} else{
+				// TODO: should error if prison_id does not exist
+				const [id] = await prisoners.add({name, prison_id});
+				res.status(201).json(id);
+			}
 		} catch (error) {
 			res.status(500).json('server error');
 		}
