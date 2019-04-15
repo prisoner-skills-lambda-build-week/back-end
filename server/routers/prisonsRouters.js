@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
 	res.status(200).json(allPrisons);
 });
 
-router.get('/:prison_id', async (req, res) => {
-	const {prison_id} = req.params;
+router.get('/:id', async (req, res) => {
+	const {id: prison_id} = req.params;
 	try {
 		const prison = await prisons.get(prison_id);
 		if(!prison){
