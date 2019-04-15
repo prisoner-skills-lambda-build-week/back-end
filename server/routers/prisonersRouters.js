@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
 const prisoners = require('../../data/prisonersModel/prisonersModel');
-const prisonersSkills = require('../../data/prisonersModel/prisonersModel');
 
 const {isAuthed} = require('../helpers');
 
