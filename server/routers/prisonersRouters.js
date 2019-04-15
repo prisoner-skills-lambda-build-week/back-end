@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 			})  
 
 			const p_skills = await Promise.all(skillsPromises);
-			res.status(200).json({...prisoner, p_skills});
+			res.status(200).json({...prisoner, skills: p_skills});
 		}
 	} catch (error) {
 		res.status(500).json('server error');
