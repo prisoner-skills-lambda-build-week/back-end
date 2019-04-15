@@ -23,10 +23,11 @@ router.get('/:id', async (req, res) => {
 			res.status(404).json('prisoner not found');
 		}else{
 			const p_skillsPair = await prisonersSkills.findBy({prisoners_id});
+
 			const skillsPromises = p_skillsPair.map(async pair => {
-				const skill = await skills.get(pair.skills_id);
-				return skill;
+				return await skills.get(pair.skills_id);
 			})  
+
 			const p_skills = await Promise.all(skillsPromises);
 			res.status(200).json({...prisoner, p_skills});
 		}
