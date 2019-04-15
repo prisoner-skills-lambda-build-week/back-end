@@ -22,6 +22,8 @@ router.get('/:id', async (req, res) => {
 			delete prison.username;
 			const prisonersInPrison = await prisoners.findBy({prison_id});
 
+			prisonersInPrison.forEach(prisoner => delete prisoner.prison_id);
+
 			res.status(200).json({
 				...prison,
 				prisoners: prisonersInPrison
