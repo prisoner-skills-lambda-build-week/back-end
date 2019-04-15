@@ -4,14 +4,15 @@ module.exports = {
 	add,
 	get,
 	getAll,
+	findBy,
 	update,
 	remove
 }
 
 const skills = 'skills';
 
-function add(skills) {
-	return db(skills).insert(skills);
+function add(skill) {
+	return db(skills).insert(skill);
 }
 
 function get(id) {
@@ -20,6 +21,10 @@ function get(id) {
 
 function getAll() {
 	return db(skills);
+}
+
+function findBy(filter) {
+	return db(skills).where(filter).first();
 }
 
 function update(id, update) {

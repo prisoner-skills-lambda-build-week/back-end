@@ -31,6 +31,6 @@ function update(id, update) {
 	return db(prisoners_skills).where({id}).update(update);
 }
 
-function remove(id) {
-	return db(prisoners_skills).where({id}).del();
+function remove(prisoners_id, skills_id) {
+	return db(prisoners_skills).where({prisoners_id, skills_id}).del();
 }
