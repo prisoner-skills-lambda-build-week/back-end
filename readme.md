@@ -1,3 +1,21 @@
+
+- POST, PUT, DELETE requests need a Token in Authorization header `except for /auth/ routes`
+
+sample request
+```js
+//axios.post(url, bodyData, config)
+axios.post('/endpoint', {
+	data: value,
+	.
+	.
+	.
+}, {
+	headers: {
+		authorization: token
+	}
+})
+```
+
 # `/auth/`
 
 ## POST `/auth/register`
