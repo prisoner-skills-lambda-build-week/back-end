@@ -179,7 +179,8 @@ expected in body:
 ```js
 {
 	name: string,
-	prison_id: integer
+	prison_id: integer,
+	canHaveWorkLeave: boolean // true or false
 }
 ```
 

@@ -64,7 +64,7 @@ router.put('/:id', isAuthed, async (req, res) => {
 		res.status(400).json('incomplete data');
 	} else{
 		try {
-			const updatedPrisoner = await prisoners.update(id, {name, prison_id});
+			const updatedPrisoner = await prisoners.update(id, req.body);
 			res.status(200).json(updatedPrisoner);
 		} catch (error) {
 			res.status(500).json('server error');
