@@ -39,12 +39,10 @@ router.post('/', isAuthed, async (req, res) => {
 		const isNotDuplicate = currentSkills.every(p_skill => p_skill.skills_id !== skills_id);
 		if(!isNotDuplicate){
 			res.status(400).json('prisoner already have this skill');
-			return;
+		} else{
+			const data = await prisonersSkills.add({prisoners_id, skills_id});
+			res.status(201).json('succesfully created');
 		}
-
-		const data = await prisonersSkills.add({prisoners_id, skills_id});
-		res.status(201).json('succesfully created');
-
 	} catch (error) {
 		res.status(500).json('server error');
 	}
