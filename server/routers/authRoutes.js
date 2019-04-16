@@ -19,16 +19,16 @@ router.post('/register', async (req, res) => {
 			} else{
 				const id = await prisons.add({username, address, name, password});
 				console.log(id)
-				const prison = await prisons.get(id);
-				const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
+				// const prison = await prisons.get(id);
+				// const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
 				const token = generateToken(prison);
 				res.status(201).json({
-					prison: {
-						id: prison.id,
-						name: prison.name,
-						address: prison.address,
-						prisoners: prisonersInPrison
-					},
+					// prison: {
+					// 	id: prison.id,
+					// 	name: prison.name,
+					// 	address: prison.address,
+					// 	prisoners: prisonersInPrison
+					// },
 					token
 				});
 			}
