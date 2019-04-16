@@ -17,8 +17,8 @@ router.post('/register', async (req, res) => {
 			if(existingPrison){
 				res.status(412).json('already exists');
 			} else{
-				const [id] = await prisons.add({username, address, name, password});
-				const prison = await prisons.get(id);
+				const returned = await prisons.add({username, address, name, password});
+				const prison = await prisons.get(returned[0].id);
 				const prisonersInPrison = await prisoners.findBy({prison_id: prison.id});
 				const token = generateToken(prison);
 				res.status(201).json({

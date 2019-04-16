@@ -14,7 +14,7 @@ const prisons = 'prisons';
 
 function add(prison) {
 	const password = bcrypt.hashSync(prison.password, 4);
-	return db(prisons).insert({...prison, password});
+	return db(prisons).insert({...prison, password}, ['id']);
 }
 
 function get(id) {
