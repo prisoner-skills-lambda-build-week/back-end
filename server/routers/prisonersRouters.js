@@ -49,7 +49,7 @@ router.post('/', isAuthed, async (req, res) => {
 			} else{
 				// TODO: should error if prison_id does not exist
 				const returned = await prisoners.add({name, prison_id});
-				res.status(201).json(id);
+				res.status(201).json(returned[0].id);
 			}
 		} catch (error) {
 			res.status(500).json('server error');
