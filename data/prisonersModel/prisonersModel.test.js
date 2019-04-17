@@ -50,19 +50,7 @@ describe('prisonersModel', () => {
 				prison_id: 1
 			});
 			let prisoners = await prisonersModel.getAll();
-			delete prisoners[0].id;
-			delete prisoners[1].id;
-			expect(prisoners[0]).toEqual({
-				name: 'Jojo',
-				prison_id: 1,
-				canHaveWorkLeave: 0 
-			});
-
-			expect(prisoners[1]).toEqual({
-				name: 'Mojo',
-				prison_id: 1,
-				canHaveWorkLeave: 0 
-			})
+			expect(prisoners.length).toBe(2);
 		})
 	});
 
