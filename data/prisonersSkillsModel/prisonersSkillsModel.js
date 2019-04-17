@@ -16,7 +16,7 @@ function add(p_skill) {
 }
 
 function get(id) {
-	return db(prisoners_skills).where(id).first();
+	return db(prisoners_skills).where({id}).first();
 }
 
 function getAll() {
