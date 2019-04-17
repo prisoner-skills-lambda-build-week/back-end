@@ -48,8 +48,8 @@ router.post('/', isAuthed, async (req, res) => {
 				res.status(404).json('prison not found');
 			} else{
 				// TODO: should error if prison_id does not exist
-				const [id] = await prisoners.add({name, prison_id});
-				res.status(201).json(id);
+				const returned = await prisoners.add({name, prison_id});
+				res.status(201).json(returned[0].id);
 			}
 		} catch (error) {
 			res.status(500).json('server error');

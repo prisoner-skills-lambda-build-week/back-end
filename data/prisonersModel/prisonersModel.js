@@ -12,7 +12,7 @@ module.exports = {
 const prisoners = 'prisoners';
 
 function add(prisoner) {
-	return db(prisoners).insert(prisoner);
+	return db(prisoners).insert(prisoner, ['id']);
 }
 
 function get(id) {
