@@ -1,5 +1,4 @@
 const db = require('../dbConfig');
-const prisonsModel = require('../prisonsModel/prisonsModel');
 const prisonersModel = require('./prisonersModel');
 
 
