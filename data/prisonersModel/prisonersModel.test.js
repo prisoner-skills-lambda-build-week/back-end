@@ -3,22 +3,26 @@ const prisonersModel = require('./prisonersModel');
 
 
 describe('prisonersModel', () => {
-	beforeEach(async () => db('prisoners').truncate()); 
+	beforeEach(async done => {
+		await db.seed.run();
+		done();
+	}); 
 
 	describe('add()', () => {
 			
 		test('should add new prisoner', async () => {
+			
 			let [id] = await prisonersModel.add({
-				name: 'Jojo',
+				name: 'Jaja',
 				prison_id: 1
 			});
-			expect(id).toBe(1);
+			expect(id).toBe(5);
 
 			[id] = await prisonersModel.add({
 				name: 'Saitama',
 				prison_id: 1
 			});
-			expect(id).toBe(2);
+			expect(id).toBe(6);
 		})
 	})
 
@@ -50,7 +54,7 @@ describe('prisonersModel', () => {
 				prison_id: 1
 			});
 			let prisoners = await prisonersModel.getAll();
-			expect(prisoners.length).toBe(2);
+			expect(prisoners.length).toBe(6);
 		})
 	});
 
@@ -114,7 +118,7 @@ describe('prisonersModel', () => {
 
 			let prisoners = await prisonersModel.getAll();
 
-			expect(prisoners.length).toBe(1);
+			expect(prisoners.length).toBe(5);
 		})
 	});
 

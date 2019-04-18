@@ -3,7 +3,10 @@ const skillsModel = require('./skillsModel');
 
 
 describe('skillsModel', () => {
-	beforeEach(async () => db('skills').truncate()); 
+	beforeEach(async done => {
+		await db.seed.run();
+		done();
+	});
 
 	describe('add()', () => {
 			
@@ -11,12 +14,12 @@ describe('skillsModel', () => {
 			let [id] = await skillsModel.add({
 				name: 'React',
 			});
-			expect(id).toBe(1);
+			expect(id).toBe(4);
 
 			[id] = await skillsModel.add({
 				name: 'Nodejs',
 			});
-			expect(id).toBe(2);
+			expect(id).toBe(5);
 		})
 	})
 
@@ -49,7 +52,7 @@ describe('skillsModel', () => {
 			});
 
 			let skills = await skillsModel.getAll();
-			expect(skills.length).toBe(2);
+			expect(skills.length).toBe(5);
 		})
 	});
 
@@ -101,7 +104,7 @@ describe('skillsModel', () => {
 
 			await skillsModel.remove(1)
 			let skills = await skillsModel.getAll();
-			expect(skills.length).toBe(1);
+			expect(skills.length).toBe(4);
 		})
 	});
 

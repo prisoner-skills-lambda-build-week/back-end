@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_ENV=testing jest",
+    "test": "cross-env DB_ENV=testing jest --watch",
     "serve": "nodemon index.js",
     "start": "node index.js"
   },
@@ -32,6 +32,7 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "jest": "^24.7.1",
+    "knex-cleaner": "^1.1.4",
     "nodemon": "^1.18.11",
     "supertest": "^4.0.2"
   }

@@ -3,7 +3,10 @@ const prisonsModel = require('./prisonsModel');
 
 
 describe('prisonsModel', () => {
-	beforeEach(async () => db('prisons').truncate()); 
+	beforeEach(async done => {
+		await db.seed.run();
+		done();
+	});
 
 	describe('add()', () => {
 		test('should add new prison', async () => {
@@ -22,26 +25,30 @@ describe('prisonsModel', () => {
 				password: 'pass'
 			});
 			expect(id).toBe(2);
-		})
-	})
+		});
+	});
 
 	describe('get()', () => {
 		test('should return a prison', async () => {
-			let [id] = await prisonsModel.add({
+			
+
+			await prisonsModel.add({
 				username: 'qwerty', 
 				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
+				name: 'DC Central Detention Facility',
 				password: 'pass'
-			});
-			let prison = await prisonsModel.get(id);
-			delete prison.id;
+			})
+
+			let prison = await prisonsModel.get(1);
 			delete prison.password;
+
 			expect(prison).toEqual({
+				id: 1,
 				username: 'qwerty', 
 				address: '1901 D St SE, Washington, DC 20003', 
 				name: 'DC Central Detention Facility', 
 			})
-		})
+		});
 	});
 
 	describe('getAll()', () => {
@@ -49,43 +56,17 @@ describe('prisonsModel', () => {
 			await prisonsModel.add({
 				username: 'qwerty', 
 				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
+				name: 'DC Central Detention Facility',
 				password: 'pass'
 			});
 
-			await prisonsModel.add({
-				username: 'random', 
-				address: 'random location', 
-				name: 'cool name', 
-				password: 'pass'
-			});
 			let prisons = await prisonsModel.getAll();
-			delete prisons[0].id;
-			delete prisons[1].id;
-			delete prisons[0].password;
-			delete prisons[1].password;
-			expect(prisons[0]).toEqual({
-				username: 'qwerty', 
-				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
-			});
-
-			expect(prisons[1]).toEqual({
-				username: 'random', 
-				address: 'random location', 
-				name: 'cool name', 
-			})
+			expect(prisons.length).toBe(1);
 		})
 	});
 
 	describe('findBy()', () => {
 		test('should return a prison', async () => {
-			await prisonsModel.add({
-				username: 'qwerty', 
-				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
-				password: 'pass'
-			});
 
 			await prisonsModel.add({
 				username: 'random', 
@@ -108,19 +89,19 @@ describe('prisonsModel', () => {
 
 	describe('update()', () => {
 		test('should update a prison', async () => {
+			
 			await prisonsModel.add({
-				username: 'qwerty', 
-				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
+				username: 'random',
+				address: 'location',
+				name: 'name',
 				password: 'pass'
-			});
+			})
 
 			await prisonsModel.update(1,{
-				username: 'random', 
 				address: 'random location', 
 				name: 'cool name', 
-				password: 'pass'
 			});
+			
 
 			let prison = await prisonsModel.get(1);
 			delete prison.id;
@@ -131,7 +112,7 @@ describe('prisonsModel', () => {
 				address: 'random location', 
 				name: 'cool name', 
 			});
-		})
+		});
 	});
 
 	describe('remove()', () => {

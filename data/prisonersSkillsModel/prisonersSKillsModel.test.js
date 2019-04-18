@@ -5,34 +5,25 @@ const prisonersSkillsModel = require('./prisonersSkillsModel');
 
 
 describe('prisonersSkillsModel', () => {
-	beforeEach(async () => db('prisoners_skills').truncate()); 
+	beforeEach(async done => {
+		await db.seed.run();
+		done();
+	}); 
 
 	describe('add()', () => {
-			
 		test('should add new skill to prisoner', async () => {
-			await prisonersModel.add({
-				name: 'Jojo',
-				prison_id: 1
-			})
-			await skillsModel.add({
-				name: 'React',
-			});
-
-			await skillsModel.add({
-				name: 'Nodejs',
-			});
 
 			let [id] = await prisonersSkillsModel.add({
 				prisoners_id: 1,
 				skills_id: 1
 			});
-			expect(id).toBe(1);
+			expect(id).toBe(6);
 
 			[id] = await prisonersSkillsModel.add({
 				prisoners_id: 1,
 				skills_id: 2
 			});
-			expect(id).toBe(2);
+			expect(id).toBe(7);
 		})
 	})
 
@@ -73,17 +64,6 @@ describe('prisonersSkillsModel', () => {
 
 	describe('getAll()', () => {
 		test('should return all prisoners-skills pair', async () => {
-			await prisonersModel.add({
-				name: 'Jojo',
-				prison_id: 1
-			})
-			await skillsModel.add({
-				name: 'React',
-			});
-
-			await skillsModel.add({
-				name: 'Nodejs',
-			});
 
 			await prisonersSkillsModel.add({
 				prisoners_id: 1,
@@ -97,33 +77,12 @@ describe('prisonersSkillsModel', () => {
 
 			let prisonerskills = await prisonersSkillsModel.getAll();
 
-			expect(prisonerskills.length).toBe(2)
+			expect(prisonerskills.length).toBe(7)
 		})
 	});
 
 	describe('findBy()', () => {
 		test('should return a prisoner-skill', async () => {
-			await prisonersModel.add({
-				name: 'Jojo',
-				prison_id: 1
-			})
-			await skillsModel.add({
-				name: 'React',
-			});
-
-			await skillsModel.add({
-				name: 'Nodejs',
-			});
-
-			await prisonersSkillsModel.add({
-				prisoners_id: 1,
-				skills_id: 1
-			});
-
-			await prisonersSkillsModel.add({
-				prisoners_id: 1,
-				skills_id: 2
-			});
 
 			let prisonerskills = await prisonersSkillsModel.findBy({prisoners_id: 1});
 
@@ -167,32 +126,11 @@ describe('prisonersSkillsModel', () => {
 
 	describe('remove()', () => {
 		test('should delete a prisoners-skill', async () => {
-			await prisonersModel.add({
-				name: 'Jojo',
-				prison_id: 1
-			})
-			await skillsModel.add({
-				name: 'React',
-			});
-
-			await skillsModel.add({
-				name: 'Nodejs',
-			});
-
-			await prisonersSkillsModel.add({
-				prisoners_id: 1,
-				skills_id: 1
-			});
-
-			await prisonersSkillsModel.add({
-				prisoners_id: 1,
-				skills_id: 2
-			});
 
 			await prisonersSkillsModel.remove(1, 2);
 
 			let prisonerskills = await prisonersSkillsModel.getAll();
-			expect(prisonerskills.length).toBe(1);
+			expect(prisonerskills.length).toBe(4);
 		})
 	});
 
