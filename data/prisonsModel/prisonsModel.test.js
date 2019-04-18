@@ -30,8 +30,7 @@ describe('prisonsModel', () => {
 
 	describe('get()', () => {
 		test('should return a prison', async () => {
-			const all = await db('prisons')
-			console.log(all)
+			
 
 			await prisonsModel.add({
 				username: 'qwerty', 
@@ -39,10 +38,12 @@ describe('prisonsModel', () => {
 				name: 'DC Central Detention Facility',
 				password: 'pass'
 			})
+
 			let prison = await prisonsModel.get(1);
-			delete prison.id;
 			delete prison.password;
+
 			expect(prison).toEqual({
+				id: 1,
 				username: 'qwerty', 
 				address: '1901 D St SE, Washington, DC 20003', 
 				name: 'DC Central Detention Facility', 
@@ -52,24 +53,15 @@ describe('prisonsModel', () => {
 
 	describe('getAll()', () => {
 		test('should return all prisons', async () => {
-			
-			
-			let prisons = await prisonsModel.getAll();
-			delete prisons[0].id;
-			delete prisons[1].id;
-			delete prisons[0].password;
-			delete prisons[1].password;
-			expect(prisons[0]).toEqual({
+			await prisonsModel.add({
 				username: 'qwerty', 
 				address: '1901 D St SE, Washington, DC 20003', 
-				name: 'DC Central Detention Facility', 
+				name: 'DC Central Detention Facility',
+				password: 'pass'
 			});
 
-			expect(prisons[1]).toEqual({
-				username: 'asd', 
-				address: '1997 D St SE, Washington, NY 21003', 
-				name: 'Cool Name', 
-			})
+			let prisons = await prisonsModel.getAll();
+			expect(prisons.length).toBe(1);
 		})
 	});
 
@@ -97,8 +89,7 @@ describe('prisonsModel', () => {
 
 	describe('update()', () => {
 		test('should update a prison', async () => {
-			const all = await db('prisons')
-			console.log(all)
+			
 			await prisonsModel.add({
 				username: 'random',
 				address: 'location',
