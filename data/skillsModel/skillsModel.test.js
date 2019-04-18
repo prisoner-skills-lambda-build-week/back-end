@@ -3,7 +3,10 @@ const skillsModel = require('./skillsModel');
 
 
 describe('skillsModel', () => {
-	beforeEach(async () => db('skills').truncate()); 
+	beforeAll(async done => {
+		await db.seed.run();
+		done();
+	});
 
 	describe('add()', () => {
 			

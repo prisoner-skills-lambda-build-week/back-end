@@ -5,7 +5,10 @@ const prisonersSkillsModel = require('./prisonersSkillsModel');
 
 
 describe('prisonersSkillsModel', () => {
-	beforeEach(async () => db('prisoners_skills').truncate()); 
+	beforeAll(async done => {
+		await db.seed.run();
+		done();
+	}); 
 
 	describe('add()', () => {
 			
