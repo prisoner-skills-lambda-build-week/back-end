@@ -10,7 +10,7 @@ describe('prisonersModel', () => {
 
 	describe('add()', () => {
 			
-		test.only('should add new prisoner', async () => {
+		test('should add new prisoner', async () => {
 			
 			let [id] = await prisonersModel.add({
 				name: 'Jaja',
@@ -54,7 +54,7 @@ describe('prisonersModel', () => {
 				prison_id: 1
 			});
 			let prisoners = await prisonersModel.getAll();
-			expect(prisoners.length).toBe(2);
+			expect(prisoners.length).toBe(6);
 		})
 	});
 
@@ -118,7 +118,7 @@ describe('prisonersModel', () => {
 
 			let prisoners = await prisonersModel.getAll();
 
-			expect(prisoners.length).toBe(1);
+			expect(prisoners.length).toBe(5);
 		})
 	});
 
