@@ -83,6 +83,7 @@ router.delete('/:id', isAuthed, async (req, res) => {
 			res.status(200).json('successfully deleted');
 		}
 	} catch (error) {
+		console.log(error)
 		res.status(500).json('server error');
 	}
 });
